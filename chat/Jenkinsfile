@@ -13,7 +13,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    sh 'docker run chat-app python client.py'  # Ajusta el comando según tus necesidades
+                    sh 'docker run chat-app python client.py'
                 }
             }
         }
@@ -21,7 +21,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    sh 'docker-compose up -d'  # Ajusta el comando según tus necesidades
+                    sh 'docker-compose up -d'
                 }
             }
         }
