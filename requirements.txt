@@ -1,0 +1,1 @@
+# requirements.txt (vacío en este caso)
