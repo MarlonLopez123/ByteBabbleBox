@@ -1,5 +1,6 @@
 import socket
 import threading
+import os
 
 def handle_client(client_socket):
     while True:
@@ -24,3 +25,7 @@ def run_server():
 
 if __name__ == "__main__":
     run_server()
+
+# Guarda el PID del servidor en 'server_pid.txt'
+with open('server_pid.txt', 'w') as file:
+    file.write(str(os.getpid()))

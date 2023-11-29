@@ -2,20 +2,14 @@ language: python
 python:
   - "3.8"
 
-services:
-  - docker
+before_install:
+  - pip install -r requirements.txt  # Instala las dependencias
 
-install:
-  - pip install -r requirements.txt
+before_script:
+  - python server.py &  # Inicia el servidor en segundo plano
 
 script:
-  - echo "Building Docker image..."
-  - docker build -t chat-app .
-  - echo "Running Docker container..."
-  - docker run -d --name chat-server chat-app
-  - echo "Running unit tests..."
   - python -m unittest tests.test_chat
-  - echo "Stopping Docker container..."
-  - docker stop chat-server-container
 
-timeout: 20m
+after_script:
+  - kill $(cat server_pid.txt)  # Detiene el servidor usando el PID guardado
