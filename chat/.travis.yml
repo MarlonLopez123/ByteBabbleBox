@@ -6,7 +6,7 @@ services:
   - docker
 
 script:
-  - docker exec chat-server python -m unittest discover unittest  # Ajusta el comando según tus necesidades
+  - python -m unittest tests.test_chat
 
 after_script:
   - docker stop chat-server
