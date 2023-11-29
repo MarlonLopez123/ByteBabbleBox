@@ -9,6 +9,10 @@ install:
   - pip install -r requirements.txt
 
 script:
+  - echo "Building Docker image..."
+  - docker build -t chat-app .
+  - echo "Running Docker container..."
+  - docker run -d --name chat-server chat-app
   - echo "Running unit tests..."
   - python -m unittest tests.test_chat
   - echo "Stopping Docker container..."
