@@ -5,9 +5,5 @@ python:
 services:
   - docker
 
-before_install:
-  - docker build -t chat-app .
-  - docker run -d --name chat-server chat-app
-
 script:
-  - docker exec chat-server python -m unittest tests.test_chat
+  - python -m unittest tests.test_chat
