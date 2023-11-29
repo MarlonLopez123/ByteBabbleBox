@@ -1,0 +1,12 @@
+language: python
+python:
+  - "3.8"
+
+services:
+  - docker
+
+script:
+  - docker exec chat-server python -m unittest discover unittest  # Ajusta el comando según tus necesidades
+
+after_script:
+  - docker stop chat-server
