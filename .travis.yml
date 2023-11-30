@@ -2,14 +2,15 @@ language: python
 python:
   - "3.8"
 
-before_install:
-  - pip install -r requirements.txt  # Instala las dependencias
-
-before_script:
-  - pkill -f "python server.py" || true 
-
-after_script:
-  - kill $(cat server_pid.txt)  # Detiene el servidor usando el PID guardado
-
 script:
   - python -m unittest tests.test_chat
+
+before_script:
+  - python server.py &  # Start the server in the background and store its PID
+  - echo $! > server_pid.txt
+
+after_script:
+  - kill $(cat server_pid.txt)  # Stop the server
+
+install:
+  - pip install -r requirements.txt
