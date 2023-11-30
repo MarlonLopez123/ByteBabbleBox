@@ -6,7 +6,8 @@ before_install:
   - pip install -r requirements.txt  # Instala las dependencias
 
 before_script:
-  - python server.py &  # Inicia el servidor en segundo plano
+  - pkill -f "python server.py" || true  # Detiene el servidor si ya está en ejecución
+  - python server.py & echo $! > server_pid.txt  # Inicia el servidor y guarda el PID
 
 after_script:
   - kill $(cat server_pid.txt)  # Detiene el servidor usando el PID guardado
