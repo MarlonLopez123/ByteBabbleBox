@@ -15,6 +15,15 @@ def run_server():
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.bind(('0.0.0.0', 12345))
     server.listen(5)
+    
+    # Guarda el PID del servidor en 'server_pid.txt'
+    with open('server_pid.txt', 'w') as file:
+        file.write(str(os.getpid()))
+    
+    # Guarda el mensaje de inicio en 'server_log.txt'
+    with open('server_log.txt', 'w') as log_file:
+        log_file.write("[*] Server listening on 0.0.0.0:12345\n")
+
     print("[*] Server listening on 0.0.0.0:12345")
 
     while True:
@@ -25,7 +34,3 @@ def run_server():
 
 if __name__ == "__main__":
     run_server()
-
-# Guarda el PID del servidor en 'server_pid.txt'
-with open('server_pid.txt', 'w') as file:
-    file.write(str(os.getpid()))
