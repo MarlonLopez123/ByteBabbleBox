@@ -2,7 +2,6 @@ import signal
 import os
 
 def stop_server():
-    # Reemplaza 'server_pid.txt' con el nombre del archivo donde guardas el PID del servidor
     with open('server_pid.txt', 'r') as file:
         pid = int(file.read().strip())
 
