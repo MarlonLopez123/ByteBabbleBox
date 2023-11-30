@@ -16,7 +16,7 @@ def run_server():
     server.bind(('0.0.0.0', 12345))
     server.listen(5)
     
-    # Guarda el PID del servidor en 'server_pid.txt'
+    # Guarda el PID del servidor
     with open('server_pid.txt', 'w') as file:
         file.write(str(os.getpid()))
     
