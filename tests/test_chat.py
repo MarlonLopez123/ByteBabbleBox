@@ -26,17 +26,38 @@ class TestChatServer(unittest.TestCase):
             return None
 
     def is_server_ready(self):
-        with open('server_log.txt', 'r') as file:
-            log_content = file.read()
-            return "[*] Server listening on 0.0.0.0:12345" in log_content
+        try:
+            with open('server_log.txt', 'r') as file:
+                log_content = file.read()
+                return "[*] Server listening on 0.0.0.0:12345" in log_content
+        except FileNotFoundError:
+            return False
+
+    def wait_for_server(self):
+        timeout = 10  # segundos
+        start_time = time.time()
+
+        while not self.is_server_ready():
+            if time.time() - start_time > timeout:
+                raise TimeoutError("Timed out waiting for server to start.")
+            time.sleep(1)
 
     def test_client_server_interaction(self):
-        # Tu código de prueba aquí
-        # Puedes usar el código que ya tenías aquí
-        pass
+        if self.server_pid:
+            # Server is running, don't start it again
+            return
+
+        # Start the server
+        server_thread = threading.Thread(target=self.run_server)
+        server_thread.start()
+
+        # Wait for the server to start
+        self.wait_for_server()
+
+        # Your test code here
 
     def run_server(self):
-        # Tu código del servidor aquí
+        # Your server code here
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server.bind(('0.0.0.0', 12345))
         server.listen(5)
@@ -44,6 +65,8 @@ class TestChatServer(unittest.TestCase):
 
         # Guarda el log del servidor en 'server_log.txt'
         with open('server_log.txt', 'w') as log_file:
+            log_file.write("[*] Server listening on 0.0.0.0:12345\n")
+
             while True:
                 client, addr = server.accept()
                 print(f"[*] Accepted connection from: {addr[0]}:{addr[1]}")
@@ -51,7 +74,7 @@ class TestChatServer(unittest.TestCase):
                 client_handler.start()
 
     def handle_client(self, client_socket):
-        # Tu código de manejo del cliente aquí
+        # Your client handling code here
         while True:
             data = client_socket.recv(1024)
             if not data:
