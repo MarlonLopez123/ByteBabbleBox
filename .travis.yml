@@ -2,15 +2,19 @@ language: python
 python:
   - "3.8"
 
-script:
-  - python -m unittest tests.test_chat
-
-before_script:
-  - python server.py &  # Start the server in the background and store its PID
-  - echo $! > server_pid.txt
-
-after_script:
-  - kill $(cat server_pid.txt)  # Stop the server
-
 install:
   - pip install -r requirements.txt
+  - pip install coverage
+
+before_script:
+  - python server.py & 
+  - echo $! > server_pid.txt
+
+script:
+  - coverage run --source=chat -m unittest tests.test_chat
+
+after_script:
+  - kill $(cat server_pid.txt) 
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
