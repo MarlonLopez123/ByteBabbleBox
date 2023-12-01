@@ -1,6 +1,6 @@
 language: python
 python:
-  - "3.8"
+  - "3.12"
 
 install:
   - pip install -r requirements.txt
@@ -11,6 +11,9 @@ before_script:
   - echo $! > server_pid.txt
 
 script:
+ script:
+  - echo $PATH
+  - which coverage
   - coverage run --source=chat -m unittest tests.test_chat
 
 after_script:
@@ -18,3 +21,4 @@ after_script:
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+  - cat .coverage
