@@ -19,11 +19,13 @@ class TestChatServer(unittest.TestCase):
             time.sleep(1)
 
     def get_server_pid(self):
-        try:
-            with open('server_pid.txt', 'r') as file:
-                return int(file.read().strip())
-        except FileNotFoundError:
-            return None
+        with open('server_pid.txt', 'r') as file:
+            content = file.read().strip()
+            if content:
+                return int(content)
+            else:
+                # Handle the case when the file is empty
+                return None  # or raise an appropriate exception
 
     def is_server_ready(self):
         try:
