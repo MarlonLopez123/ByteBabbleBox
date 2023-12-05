@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+  - name: app
+    image: python:3.8
+
+steps:
+  - name: Install dependencies
+    service: app
+    command: pip install -r requirements.txt
+
+  - name: Run tests
+    service: app
+    command: python -m unittest tests.test_chat
