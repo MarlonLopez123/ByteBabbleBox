@@ -4,21 +4,14 @@ python:
 
 install:
   - pip install -r requirements.txt
-  - python -m pip install coverage
-  - which coverage
 
 before_script:
   - python server.py & 
   - echo $! > server_pid.txt
 
 script:
- script:
-  - echo $PATH
-  - coverage run --source=chat -m unittest tests.test_chat
+  - python -m unittest tests.test_chat
 
 after_script:
   - kill $(cat server_pid.txt) 
 
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
-  - cat .coverage
