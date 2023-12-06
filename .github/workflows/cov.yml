@@ -3,7 +3,7 @@ name: Codecov
 on:
   push:
     branches:
-      - main  # Cambia esto según la rama de tu repositorio
+      - main
 
 jobs:
   codecov:
